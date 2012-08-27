@@ -1,6 +1,12 @@
 # zend-multipage-forms
 
-The idea behind this project was initially published here: http://www.kerstner.at/2012/01/implementing-multi-page-forms-using-the-zend-framework/
+This idea behind this project is to provide a simple framework for using multi-page
+forms in the Zend Framework (ZF).
+
+It features support for complex multi-page forms, as well as built-in breadcrumb navigation
+to iterate through the process.
+
+The original idea was published here: http://www.kerstner.at/2012/01/implementing-multi-page-forms-using-the-zend-framework/
 
 ## Requirements
 
