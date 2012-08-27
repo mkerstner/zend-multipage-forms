@@ -48,7 +48,7 @@ class Form_MultiPage extends Zend_Form {
     public function setSubFormDecoratorsT(Zend_Form_SubForm $subForm) {
         $subForm->setDecorators(array('FormElements',
             array('HtmlTag', array('tag' => 'div',
-                    'class' => 'mmsForm')),
+                    'class' => 'zfForm')),
             'Form'));
 
         return $this;

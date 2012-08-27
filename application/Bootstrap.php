@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Bootstrap the application
- * @author matthias.kerstner
+ * @author matthias.kerstner <matthias@kerstner.at> 
  */
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
@@ -35,8 +34,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      * 
      */
     public function _initConfig() {
-
-        # get config
         $config = new Zend_Config_Ini(APPLICATION_PATH .
                         DIRECTORY_SEPARATOR . 'configs' .
                         DIRECTORY_SEPARATOR . 'application.ini', APPLICATION_ENV);
@@ -82,7 +79,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         // make custom view helpers available
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
         $viewRenderer->initView();
-        
+
         $viewRenderer->view->addHelperPath(APPLICATION_PATH . '/views/helpers/', 'Custom_View_Helper_');
 
         // add default view scripts to path
@@ -96,7 +93,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      * Init Zend_Locale. Determine locale through the client's browser object.
      */
     protected function _initLocale() {
-
         $locale = null;
 
         try {
@@ -110,4 +106,3 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     }
 
 }
-

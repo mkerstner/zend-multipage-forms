@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * @author matthias.kerstner <matthias@kerstner.at>
  */
 class Form_SubFormDescription extends Zend_Form_SubForm {

@@ -5,12 +5,6 @@
  */
 class Error_IndexController extends Custom_Controller_Action {
 
-    public function init() {
-        // unset left navigation on errorpages
-        if (isset($this->view->menu3links))
-            unset($this->view->menu3links);
-    }
-
     /**
      * 403 - Access denied
      */

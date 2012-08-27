@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author matthias.kerstner
+ * @author matthias.kerstner <matthias@kerstner.at> 
  */
 class Register_Form_UserStepTwo extends Zend_Form_SubForm {
 

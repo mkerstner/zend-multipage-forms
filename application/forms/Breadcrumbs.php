@@ -1,13 +1,11 @@
 <?php
 
 /**
- *
  * @author matthias.kerstner <matthias@kerstner.at>
  */
 class Form_BreadCrumbs extends Zend_Form_SubForm {
 
     /**
-     *
      * @param array $breadCrumbs 
      */
     public function addBreadCrumbs($breadCrumbs) {
@@ -55,7 +53,6 @@ class Form_BreadCrumbs extends Zend_Form_SubForm {
     }
 
     /**
-     *
      * @param type $breadCrumbs
      * @return \Form_BreadCrumbs 
      */

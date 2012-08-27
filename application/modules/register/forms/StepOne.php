@@ -8,7 +8,7 @@ class Register_Form_StepOne extends Zend_Form_SubForm {
     public function init() {
         parent::init();
 
-        $this->addElement('text', 'email', array(
+        $this->addElement('text', 'step1', array(
             'filters' => array('StringTrim'),
             'decorators' => array(
                 'viewHelper', array(
@@ -19,8 +19,8 @@ class Register_Form_StepOne extends Zend_Form_SubForm {
             'validators' => array(
                 array('StringLength', true, array(1, 255))),
             'required' => true,
-            'label' => 'Email (Step 1)',
-            'id' => 'EmailStepOne'
+            'label' => 'Step 1',
+            'id' => 'StepOne'
         ));
     }
 
