@@ -1,18 +1,17 @@
-zend-multipage-forms
-====================
+# zend-multipage-forms
 
-zend-multipage-forms
+The idea behind this project was initially published here: http://www.kerstner.at/2012/01/implementing-multi-page-forms-using-the-zend-framework/
 
-The project's homepage is accessible here: http://www.kerstner.at/2012/01/implementing-multi-page-forms-using-the-zend-framework/
+## Requirements
 
+This is a standard Zend Framework project. There is nothing fancy about the setup
+so you should be good with the standard LAMP stack, although PHP 5.3+ is required.
 
-=====================
-Setting Up Your VHOST
-=====================
+## Setting Up Your VHOST
 
 The following is a sample VHOST you might want to consider for your project.
 
-<VirtualHost *:80>
+`<VirtualHost *:80>
    DocumentRoot "./zend-multipage-forms/public"
    ServerName test.local
 
@@ -26,4 +25,8 @@ The following is a sample VHOST you might want to consider for your project.
        Allow from all
    </Directory>
 
-</VirtualHost>
+</VirtualHost>`
+
+## Demo
+
+Once setup you can start the demo setup by navigating to the register controller, e.g. http://test.local/register/
