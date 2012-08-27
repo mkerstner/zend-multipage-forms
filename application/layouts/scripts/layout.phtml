@@ -1,0 +1,26 @@
+<?php
+$locale = Zend_Registry::get('Zend_Locale');
+
+$this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
+
+echo $this->doctype();
+?>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" 
+      dir="ltr" lang="<?php echo str_replace('_', '-', $locale->toString()) ?>">
+
+    <head>
+        <title>Registration</title>
+        <?php
+        echo $this->headMeta();
+
+        $this->headLink()->appendStylesheet($this->baseUrl() . '/css/layout.css');
+        ?>
+    </head>
+
+    <body>
+        <?php
+        echo $this->layout()->content;
+        ?>
+    </body>
+</html>
