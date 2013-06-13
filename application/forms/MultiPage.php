@@ -20,7 +20,7 @@ class Form_MultiPage extends Zend_Form {
 
         if (is_string($spec)) {
             $subForm = $this->{$spec};
-        } elseif ($spec instanceof Zend_Form_SubForm) {
+        } elseif ($spec instanceof Zend_Form_SubForm || ($spec instanceof Zend_Form && $spec->isArray())) {
             $subForm = $spec;
         } else {
             throw new Exception('Invalid argument passed to ' .
