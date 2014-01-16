@@ -3,7 +3,7 @@
 /**
  * @author matthias.kerstner <matthias@kerstner.at>
  */
-class Error_IndexController extends Custom_Controller_Action {
+class Error_IndexController extends Zend_Controller_Action {
 
     /**
      * 403 - Access denied

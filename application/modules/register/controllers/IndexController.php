@@ -15,6 +15,12 @@ class Register_IndexController extends Custom_Controller_MultiPage {
         'step2' => 'Step2',
         'step3' => 'Step3',
         'step4' => 'Verification');
+    protected $_viewScriptsForStep = array(
+        'step1' => '_step1.phtml',
+        'step2' => '_step2.phtml',
+        'step3' => '_step3.phtml',
+        'step4' => '_verification.phtml'
+    );
     protected $_namespace = 'RegisterUserController';
 
     //protected $_excludeCsrfSubForms = array('step1');

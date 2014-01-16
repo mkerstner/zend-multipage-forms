@@ -15,8 +15,16 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
     protected $_session;
 
     /**
+     * You can specifiy custom layout scripts for each step separately. If no
+     * custom step layout script is specified index.phtml will be used as 
+     * default.
+     * @var type 
+     */
+    protected $_viewScriptsForStep = array();
+
+    /**
      * Determines which sub-forms should not have CSRF-protection
-     * @var array 
+     * @var array
      */
     protected $_excludeCsrfSubForms = array();
 
@@ -41,7 +49,7 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
      */
     protected function populateForm($form, $data) {
         /**
-         * populate with data -> be aware that only fields set in 
+         * populate with data -> be aware that only fields set in
          * this array will be populated!
          */
         return $form->populate($data);
@@ -76,7 +84,7 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
      */
     protected function checkStep($step, Zend_Form_SubForm &$subForm, array $cleanedPostData, array $rawPostData) {
         $step = preg_replace('/[a-z]/i', '', $step);
-        return $cleanedPostData;  //TO BE IMPLEMENTED IN CONCRETE CONTROLLER
+        return $cleanedPostData; //TO BE IMPLEMENTED IN CONCRETE CONTROLLER
     }
 
     /**
@@ -134,7 +142,7 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
     }
 
     /**
-     * Get a list of forms already stored in the session, i.e. those steps that 
+     * Get a list of forms already stored in the session, i.e. those steps that
      * have been verified.
      * @return array
      */
@@ -161,12 +169,14 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
      */
     public function getCurrentSubForm() {
         $request = $this->getRequest();
+
         if (!$request->isPost()) {
             return false;
         }
 
         foreach ($this->getPotentialForms() as $name) {
             $data = $request->getPost($name, false);
+
             if ($data) {
                 if (is_array($data)) {
                     return $this->getForm()->getSubForm($name);
@@ -260,14 +270,14 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
 
     /**
      * Checks if sub form is valid, i.e. valid data has been POSTed.
-     * @param  Zend_Form_SubForm $subForm
-     * @param  array $postData
+     * @param Zend_Form_SubForm $subForm
+     * @param array $postData
      * @return bool
      */
     public function subFormIsValid(Zend_Form_SubForm $subForm, array $postData) {
 
         if ($subForm->isValid($postData)) {
-
+            
             $subFormName = $subForm->getName();
             $formData = $subForm->getValues();
 
@@ -302,7 +312,7 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
 
             return true; //subform is valid
         }
-
+        
         //set subset of VALID fields in session namespace
         $subSubForms = $subForm->getSubForms();
         $subFormName = $subForm->getName();
@@ -322,7 +332,7 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
                         $vEl->isValid($postData[$subFormName][$k][$kEl], $postData[$subFormName][$k])) {
                     $validSubFormFields[$k][$kEl] = $vEl->getValue();
                 } else {
-                    //...    
+                    //...
                 }
             }
         }
@@ -407,9 +417,9 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
         $breadCrumbs[0]['enabled'] = true;
 
         $breadCrumbSubForm = new Form_BreadCrumbs();
-
-
-        $subForm->addSubForm($breadCrumbSubForm->addBreadCrumbs($breadCrumbs), 'breadCrumbs', 1000); //1000=p at the very end of the form
+        //1000=p at the very end of the form
+        $subForm->addSubForm($breadCrumbSubForm
+                        ->addBreadCrumbs($breadCrumbs), 'breadCrumbs', 1000);
 
         return $subForm;
     }
@@ -428,9 +438,9 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
     }
 
     /**
-     * The last sub-form is to verify the entire form -> display form data 
+     * The last sub-form is to verify the entire form -> display form data
      * submitted once more.
-     * This comes in handy if you want to users to present their data entered 
+     * This comes in handy if you want to users to present their data entered
      * in all sub forms once more to let them verify their input.
      * @param Zend_Form_SubForm $form
      * @return Zend_Form_SubForm
@@ -468,7 +478,8 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
         }
 
         $html .= '<div id="VerificationFormContainer">';
-        $html .= $this->view->partialViewRenderer()->renderViewContent($this->_verificationViewScript, $sessionData);
+        $html .= $this->view->partialViewRenderer()->renderViewContent('index/'
+                . $this->_verificationViewScript, $sessionData);
         $html .= '</div>';
 
         if (!$form->getSubForm('subFormDescription')) { //make sure verification subform exists
@@ -476,14 +487,17 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
         }
 
         // append html to description element
-        $form->getSubForm('subFormDescription')->getElement('description')->setValue(
-                $form->getSubForm('subFormDescription')->getElement('description')->getValue() . $html);
+        $form->getSubForm('subFormDescription')
+                ->getElement('description')->setValue(
+                $form->getSubForm('subFormDescription')
+                        ->getElement('description')->getValue()
+                . $html);
 
         return $form;
     }
 
     /**
-     * Display <form> to add private user account and POST to addAction to 
+     * Display <form> to add private user account and POST to addAction to
      * process data.
      */
     public function indexAction() {
@@ -502,7 +516,7 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
         $form = $this->attachFinalFormVerification($form);
         $form = $this->addFormBreadCrumbs($form);
         $form = $this->addCsrfProtection($form);
-        $form = $this->getForm()->prepareSubForm($form, $this->view->url(array(), 'register_process'), false, $this->checkAttachSubmitButton($form->getName()));
+        $form = $this->getForm()->prepareSubForm($form, $this->view->linkRoute()->getUrl('register_process'), false, $this->checkAttachSubmitButton($form->getName()));
         $form = $this->populateForm($form, $formSessionData);
         $this->view->form = $form;
     }
@@ -529,10 +543,10 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
         // actions/checks to be carried out PRIOR to actual validation
         $this->checkSessionStep($form);
         $form = $this->preSubFormActions($form, $postData);
-
+        
         // check submitted subform
         if (!$this->subFormIsValid($form, $postData)) {
-
+            
             // set next subform to load based on breadcrumb navigation
             if ($nextSubFormToLoad != null) {
                 $form = $nextSubFormToLoad;
@@ -549,7 +563,12 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
             $form = $this->addFormBreadCrumbs($form);
             $form = $this->attachFinalFormVerification($form);
             $form = Custom_Plugin_CsrfProtection::addCsrfProtection($form);
-            $this->view->form = $this->getForm()->prepareSubForm($form, $this->view->url(array(), 'register_process'), $this->isLastSubForm($form->getName()), $this->checkAttachSubmitButton($form->getName()));
+            $this->view->form = $this->getForm()->prepareSubForm($form, $this->view->linkRoute()->getUrl('register_process'), $this->isLastSubForm($form->getName()), $this->checkAttachSubmitButton($form->getName()));
+
+            // set custom step view script
+            if (array_key_exists($form->getName(), $this->_viewScriptsForStep)) {
+                $this->view->customStepViewScript = $this->_viewScriptsForStep[$form->getName()];
+            }
 
             return $this->render('index');
         }
@@ -561,7 +580,7 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
             if ($nextSubFormToLoad != null) {
                 $form = $nextSubFormToLoad; // breadcrumb navigation
             } else {
-                $form = $this->getNextSubForm(); // next step 
+                $form = $this->getNextSubForm(); // next step
             }
 
             $formSessionData = $this->getSessionNamespaceData();
@@ -574,9 +593,15 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
             $form = $this->preSubFormActions($form, $postData);
             $form = $this->addFormBreadCrumbs($form);
             $form = $this->attachFinalFormVerification($form);
+
             $form = Custom_Plugin_CsrfProtection::addCsrfProtection($form);
             $this->view->form = $this->getForm()
-                    ->prepareSubForm($form, $this->view->url(array(), 'register_process'), $this->isLastSubForm($form->getName()), $this->checkAttachSubmitButton($form->getName()));
+                    ->prepareSubForm($form, $this->view->linkRoute()->getUrl('register_process'), $this->isLastSubForm($form->getName()), $this->checkAttachSubmitButton($form->getName()));
+
+            // set custom step view script
+            if (array_key_exists($form->getName(), $this->_viewScriptsForStep)) {
+                $this->view->customStepViewScript = $this->_viewScriptsForStep[$form->getName()];
+            }
 
             return $this->render('index');
         }
@@ -612,4 +637,3 @@ class Custom_Controller_MultiPage extends Zend_Controller_Action {
 
 }
 
-?>
