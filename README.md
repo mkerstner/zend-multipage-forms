@@ -6,6 +6,9 @@ for using multi-page forms in the Zend Framework (ZF).
 It features support for *complex multi-page forms*, built-in *breadcrumb navigation*
 and a final *verification* step based on a CAPTCHA field.
 
+Also includes functionality to directly jump to steps in your multi-page form. Furthermore,
+you are able to specify custom view scripts for each step individually.
+
 The original idea was published here: 
 http://www.kerstner.at/2012/01/implementing-multi-page-forms-using-the-zend-framework/
 
